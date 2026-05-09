@@ -2,6 +2,13 @@
 const cl=console.log;
 
 const stddata=document.getElementById("stddata");
+const stdContainer=document.getElementById("stdContainer");
+const fname=document.getElementById("fname");
+const lname=document.getElementById("lname");
+const email=document.getElementById("email");
+const contact=document.getElementById("contact");
+
+
 
 const studentData = [
   {
@@ -35,11 +42,10 @@ const studentData = [
 ];
 
 
-
 function templating(ele){
       let result='';
       ele.forEach((o,i) => {
-        result +=`<tr>
+        result +=`<tr id='${o.id}'>
                                         <td>${i+1}</td>
                                         <td>${o.firstName} ${o.lastName}</td>
                                         <td>${o.email}</td>
@@ -54,12 +60,47 @@ function templating(ele){
 templating(studentData)
 
 
-function onStdRead(){
+function onstdSubmit(ele){
+    ele.preventDefault();
 
+    //create a new std obj
+
+    let NEW_OBJ ={
+        firstName:fname.value,
+        lastName:lname.value,
+        email:email.value,
+        contact:contact.value,
+        id:Date.now().toString()
+    }
+    
+    //add new obj in db
+
+    studentData.push(NEW_OBJ);
+    stdContainer.reset()
+    
+    //add data in ui
+
+    let tr = document.createElement('tr');
+    tr.innerHTML=`
+                                        <td>${studentData.length}</td>
+                                        <td>${NEW_OBJ.firstName} ${NEW_OBJ.lastName}</td>
+                                        <td>${NEW_OBJ.email}</td>
+                                        <td>${NEW_OBJ.contact}</td>
+                                        <td><i type="button" class="fa-solid fa-pen-to-square text-primary fa-2x"></i></i></td>
+                                        <td><i type="button" class="fa-solid fa-trash-can text-danger fa-2x"></i></td>
+                                   `
+
+    
+    stddata.append(tr);
+    Swal.fire({
+          title: "new student data added successfully!",
+          icon: "success",
+          timer:3000
+    });
 }
 
 
 
 
 
-stddata.addEventListener('submit',onStdRead)
+stdContainer.addEventListener('submit',onstdSubmit)
