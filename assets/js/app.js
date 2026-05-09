@@ -35,8 +35,9 @@ const studentData = [
 ];
 
 
-let result='';
+
 function templating(ele){
+      let result='';
       ele.forEach((o,i) => {
         result +=`<tr>
                                         <td>${i+1}</td>
@@ -48,7 +49,7 @@ function templating(ele){
                                     </tr>`
         
  } );
-   stddata.innerHTML=result;   
+     stddata.innerHTML=result;
 }
 templating(studentData)
 
